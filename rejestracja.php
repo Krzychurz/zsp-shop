@@ -31,14 +31,29 @@
             </button>
         </form>
         <?php
+            $x=0;
             if(isset($_POST['login']) && isset($_POST['password']) && isset($_POST['password2']))
             {
-                if($_POST['password'] == $_POST['password2'])
+                while($row=$res->fetch_assoc())
+                {
+                    if($_POST['login'] == $row['login'])
                     {
-                        
-                        $send = "INSERT INTO mydb('login','password',0) VALUES(".$_POST['login'].",".$_POST['password'].")";
+                        $x=1;
+                        echo"<br>Konto już istnieje";
                     }
-                echo"<br>Niepoprawny login lub hasło";
+                }
+                if($_POST['password'] == $_POST['password2'] && $x==0 && strlen($_POST['login'])>0)
+                    {
+                        $login=$_POST['login'];
+                        $haslo=$_POST['password'];
+                        $send = "INSERT INTO `users` (`id`, `login`, `password`, `is_admin`) VALUES (NULL, '$login', '$haslo', '0');";
+                        $con->query($send);
+                    }
+                else
+                {
+                    echo"<br>Podaj odpowiednie dane";
+                }
+            
             }
             $con->close();
         ?>

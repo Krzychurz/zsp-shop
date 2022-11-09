@@ -38,7 +38,7 @@
                                 if($_POST['password'] == $row['password'])
                                 $_SESSION['konto']=$_POST['login'];
                                 $_POST = array();
-                                header("Location: rejestracja.php");
+                                header("Location: lista.php");
                             }
                         }
                     echo"<br>Niepoprawny login lub hasło";
