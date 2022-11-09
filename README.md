@@ -1,0 +1,1 @@
+## Projekt bazy danych, eksportowana baza danych bez uzupełnionych tabel, uzupełniona baza danych
