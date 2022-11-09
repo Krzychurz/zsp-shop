@@ -7,7 +7,6 @@
             $con = new mysqli("localhost","root","","mydb");
             $sql = "SELECT login, password, is_admin FROM users";
             $res = $con->query($sql);
-            session_start();
         ?>
     </head>
     <body>
@@ -18,31 +17,29 @@
             Hasło:
             <input type="password" name="password">
             <br>
+            Podaj hasło ponownie:
+            <input type="password" name="password2">
+            <br>
             <button type="submit">
                 Zatwierdź
             </button>
             <br>
         </form>
-        <form action="rejestracja.php" method="POST">
+        <form action="index.php" method="POST">
             <button type="submit">
-                Stwórz konto
+                Powróć do ekranu logowania
             </button>
         </form>
         <?php
-            if(isset($_POST['login']) && isset($_POST['password']))
-                {
-                    while($row=$res->fetch_assoc())
-                        {
-                            if($_POST['login'] == $row['login'])
-                            {
-                                if($_POST['password'] == $row['password'])
-                                $_SESSION['konto']=$_POST['login'];
-                                $_POST = array();
-                                header("Location: rejestracja.php");
-                            }
-                        }
-                    echo"<br>Niepoprawny login lub hasło";
-                }
+            if(isset($_POST['login']) && isset($_POST['password']) && isset($_POST['password2']))
+            {
+                if($_POST['password'] == $_POST['password2'])
+                    {
+                        
+                        $send = "INSERT INTO mydb('login','password',0) VALUES(".$_POST['login'].",".$_POST['password'].")";
+                    }
+                echo"<br>Niepoprawny login lub hasło";
+            }
             $con->close();
         ?>
     </body>
