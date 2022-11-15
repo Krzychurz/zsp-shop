@@ -5,7 +5,7 @@
         <title>Portal sklepowy</title>
         <?php
             $con = new mysqli("localhost","root","","mydb");
-            $sql = "SELECT login, password, is_admin FROM users";
+            $sql = "SELECT id, login, password, is_admin FROM users";
             $res = $con->query($sql);
             session_start();
         ?>
@@ -36,9 +36,11 @@
                             if($_POST['login'] == $row['login'])
                             {
                                 if($_POST['password'] == $row['password'])
-                                $_SESSION['konto']=$_POST['login'];
-                                $_POST = array();
-                                header("Location: lista.php");
+                                {
+                                    $_SESSION['id']=$row['id'];
+                                    $_POST = array();
+                                    header("Location: lista.php");
+                                }
                             }
                         }
                     echo"<br>Niepoprawny login lub hasło";
