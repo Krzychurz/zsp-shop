@@ -20,9 +20,11 @@
         </p>
         <?php
             echo "<table><tr><th>Nazwa</th><th>Kategoria</th><th>Cena</th><th>Ilość</th></tr></table>";
-            for($i=0;$i<count($row);$i++)
+            $i=0;
+            while($i<count($row))
             {
                 echo "<form method='POST'>";
+                echo "<input type='hidden' name='".$i."up_id' value='".$row[$i]['p_id']."'>";
                 echo "<input type='text' name='".$i."name' value='".$row[$i]['name']."'>";
                 echo "<input type='text' name='".$i."category' value='".$row[$i]['category']."'>";
                 echo "<input type='number' name='".$i."price' value='".$row[$i]['price']."'>";
@@ -34,12 +36,22 @@
                 echo "<td>".$row[$i]['price']."</td>";
                 echo "<td>".$row[$i]['ammount']."</td></tr>";
                 */
-
+                $i++;
             }
+            $x = 0;
+            echo $_POST[$x.'name'];
+            print_r($_POST);
+            if(isset($_POST['0up_id']))
+                for($j=0;$j<$i;$j++)
+                {
+                    $write = "UPDATE products p SET name='".$_POST[$j.'name']."', category='".$_POST[$j.'category']."', price='".$_POST[$j.'price']."', availability=availability+'".$_POST[$j.'ammount']."'  WHERE p.id = 1";
+                    //$write = "UPDATE products p SET name='".$_POST[$j.'name']."', category='".$_POST[$j.'category']."', price='".$_POST[$j.'price']."', ammount='".$_POST[$j.'ammount']."' WHERE p.id = '".$_POST[$j.'up_id']."'";
+                    $con->query($write);
+                }
             echo "<button type='submit'>Nadpisz</button>";
             echo "</form>";
             
-            if()
+            
 
             echo "<br>Dodaj ofertę:<br>";
             echo "<form>";
