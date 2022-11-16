@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 15 Lis 2022, 20:12
+-- Czas generowania: 16 Lis 2022, 18:13
 -- Wersja serwera: 10.4.25-MariaDB
 -- Wersja PHP: 7.4.30
 
@@ -62,7 +62,8 @@ CREATE TABLE `shopping_history` (
 --
 
 INSERT INTO `shopping_history` (`id`, `users_id`, `products_id`, `ammount`) VALUES
-(1, 1, 2, 2);
+(1, 1, 2, 2),
+(2, 1, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -124,7 +125,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT dla tabeli `shopping_history`
 --
 ALTER TABLE `shopping_history`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT dla tabeli `users`
