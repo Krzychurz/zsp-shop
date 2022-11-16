@@ -38,6 +38,7 @@
                                 if($_POST['password'] == $row['password'])
                                 {
                                     $_SESSION['id']=$row['id'];
+                                    $_SESSION['login']=$row['login'];
                                     $_POST = array();
                                     header("Location: lista.php");
                                 }
