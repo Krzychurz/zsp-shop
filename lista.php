@@ -6,7 +6,7 @@
         <?php
             session_start();
             $con = new mysqli("localhost","root","","mydb");
-            $sql = "SELECT u.id as u_id, u.login, p.id as p_id, p.name, p.category, p.price, p.availability, sh.ammount  FROM `users` u JOIN shopping_history sh ON sh.users_id = u.id JOIN products p ON p.id = sh.products_id";
+            $sql = "SELECT id, users_id AS u_id, name, price, state FROM list";
             $sql2 = "SELECT id, login FROM users";
             $res = $con->query($sql);
             $res2 = $con->query($sql2);
@@ -43,23 +43,21 @@
                 $spr=1;
                 for($i=0;$i<count($row);$i++)
                 {
-                    if($row[$i]['ammount'] > 0 && $_GET['konto']==$row[$i]['u_id'])
+                    if($_GET['konto']==$row[$i]['u_id'] && $row[$i]['state'] < 0)
                     {
                         if($spr==1)
                         {
-                            echo "<table><tr><th>Nazwa</th><th>Kategoria</th><th>Cena</th><th>Ilość</th></tr>";
+                            echo "<table><tr><th>Nazwa</th><th>Cena</th></tr>";
                             $spr=0;
                         }
                         echo "<tr><td>".$row[$i]['name']."</td>";
-                        echo "<td>".$row[$i]['category']."</td>";
                         echo "<td>".$row[$i]['price']."</td>";
-                        echo "<td>".$row[$i]['ammount']."</td></tr>";
                     }
-                    else
-                        {
-                            echo " brak";
-                            break;
-                        }
+                    elseif($i==count($row)-1 && $spr==1)
+                    {
+                        echo " brak";
+                        break;
+                    }
                 }
                 echo "</table>";
                 if($_GET['konto']==$_SESSION['id'])
