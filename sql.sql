@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 15 Lis 2022, 20:12
+-- Czas generowania: 19 Lis 2022, 13:24
 -- Wersja serwera: 10.4.25-MariaDB
--- Wersja PHP: 7.4.30
+-- Wersja PHP: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,45 +24,29 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `products`
+-- Struktura tabeli dla tabeli `list`
 --
 
-CREATE TABLE `products` (
+CREATE TABLE `list` (
   `id` int(11) NOT NULL,
-  `name` varchar(45) DEFAULT NULL,
-  `category` varchar(45) DEFAULT NULL,
-  `price` int(11) DEFAULT NULL,
-  `availability` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `user_id` int(11) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `price` int(11) NOT NULL,
+  `state` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Zrzut danych tabeli `products`
+-- Zrzut danych tabeli `list`
 --
 
-INSERT INTO `products` (`id`, `name`, `category`, `price`, `availability`) VALUES
-(1, 'banan', 'owoc', 10, 20),
-(2, 'pralka', 'AGD', 1000, 5),
-(3, 'rower', 'pojazd', 720, 3);
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `shopping_history`
---
-
-CREATE TABLE `shopping_history` (
-  `id` int(11) NOT NULL,
-  `users_id` int(11) NOT NULL,
-  `products_id` int(11) NOT NULL,
-  `ammount` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Zrzut danych tabeli `shopping_history`
---
-
-INSERT INTO `shopping_history` (`id`, `users_id`, `products_id`, `ammount`) VALUES
-(1, 1, 2, 2);
+INSERT INTO `list` (`id`, `user_id`, `name`, `price`, `state`) VALUES
+(1, 1, 'banan', 1, -1),
+(2, 2, 'rower', 700, -1),
+(3, 2, 'pralka', 1400, -1),
+(4, 3, 'krzesło', 300, 1),
+(5, 2, 'lampka', 50, 1),
+(8, 1, 'Koło', 120, -1),
+(9, 1, 'myszka', 30, -1);
 
 -- --------------------------------------------------------
 
@@ -91,18 +75,11 @@ INSERT INTO `users` (`id`, `login`, `password`, `is_admin`) VALUES
 --
 
 --
--- Indeksy dla tabeli `products`
+-- Indeksy dla tabeli `list`
 --
-ALTER TABLE `products`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeksy dla tabeli `shopping_history`
---
-ALTER TABLE `shopping_history`
-  ADD PRIMARY KEY (`id`,`users_id`,`products_id`),
-  ADD KEY `fk_shopping_history_users` (`users_id`),
-  ADD KEY `fk_shopping_history_products1` (`products_id`);
+ALTER TABLE `list`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indeksy dla tabeli `users`
@@ -115,16 +92,10 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT dla tabeli `products`
+-- AUTO_INCREMENT dla tabeli `list`
 --
-ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT dla tabeli `shopping_history`
---
-ALTER TABLE `shopping_history`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `list`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT dla tabeli `users`
@@ -137,11 +108,10 @@ ALTER TABLE `users`
 --
 
 --
--- Ograniczenia dla tabeli `shopping_history`
+-- Ograniczenia dla tabeli `list`
 --
-ALTER TABLE `shopping_history`
-  ADD CONSTRAINT `fk_shopping_history_products1` FOREIGN KEY (`products_id`) REFERENCES `products` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_shopping_history_users` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `list`
+  ADD CONSTRAINT `list_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

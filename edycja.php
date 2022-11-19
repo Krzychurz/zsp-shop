@@ -6,7 +6,7 @@
         <?php
             session_start();
             $con = new mysqli("localhost","root","","mydb");
-            $sql = "SELECT l.id AS l_id, u.id AS u_id, u.login, l.name, l.price, l.state FROM list l JOIN users u ON u.id = l.users_id WHERE u.id =".$_SESSION['id'];
+            $sql = "SELECT l.id AS l_id, u.id AS u_id, u.login, l.name, l.price, l.state FROM list l JOIN users u ON u.id = l.user_id WHERE u.id =".$_SESSION['id']." AND state=-1";
             $res = $con->query($sql);
             $row = $res->fetch_all(MYSQLI_ASSOC);
         ?>

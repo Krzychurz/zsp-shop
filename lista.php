@@ -6,7 +6,7 @@
         <?php
             session_start();
             $con = new mysqli("localhost","root","","mydb");
-            $sql = "SELECT id, users_id AS u_id, name, price, state FROM list";
+            $sql = "SELECT id, user_id AS u_id, name, price, state FROM list";
             $sql2 = "SELECT id, login FROM users";
             $res = $con->query($sql);
             $res2 = $con->query($sql2);
@@ -60,11 +60,20 @@
                     }
                 }
                 echo "</table>";
+                $_SESSION['send']=0;
                 if($_GET['konto']==$_SESSION['id'])
                 {
                     echo "<form action='edycja.php' method='POST'>";
                     echo "<input type='hidden' name='edycja' value=1>";
                     echo "<button type='submit'>Edytuj</button>";
+                    echo "</form>";
+                    echo "<form action='dodanie.php' method='POST'>";
+                    echo "<input type='hidden' name='dodanie' value=1>";
+                    echo "<button type='submit'>Dodaj ofertę</button>";
+                    echo "</form>";
+                    echo "<form action='historia.php' method='POST'>";
+                    echo "<input type='hidden' name='historia' value=1>";
+                    echo "<button type='submit'>Historia zakupów</button>";
                     echo "</form>";
                 }
                 
